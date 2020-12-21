@@ -3,29 +3,34 @@ import { Point } from "./point.js";
 export class Wave {
     constructor(stageWidth, stageHeight, numOfPoint, color, idx) {
         this.idx = idx;
-        this.init(stageWidth, stageHeight, numOfPoint, color);
+        this.stageWidth = stageWidth;
+        this.stageHeight = stageHeight;
+        this.numOfPoint = numOfPoint;
+        this.color = color;
+        this.init(stageWidth, stageHeight);
     }
-    init(stageWidth, stageHeight, numOfPoint, color) {
+    init(stageWidth, stageHeight) {
         this.points = new Array();
-        for (let i = 0; i < numOfPoint; i++) {
+        for (let i = 0; i < this.numOfPoint; i++) {
             const point = new Point(
-                (stageWidth / (numOfPoint - 1)) * i,
+                (stageWidth / (this.numOfPoint - 1)) * i,
                 stageHeight / 2,
                 0,
-                i < numOfPoint / 2
-                    ? (150 / numOfPoint) * i
-                    : (150 / numOfPoint) * (numOfPoint - 1 - i)
+                i < this.numOfPoint / 2
+                    ? (150 / this.numOfPoint) * i
+                    : (150 / this.numOfPoint) * (this.numOfPoint - 1 - i)
             );
-            point.t = this.idx + i / (numOfPoint - 1);
+            point.t = this.idx + i / (this.numOfPoint - 1);
             this.points.push(point);
         }
 
         this.stageWidth = stageWidth;
         this.stageHeight = stageHeight;
-        this.color = color;
     }
 
-    resize(stageWidth, stageHeight) {}
+    resize(stageWidth, stageHeight) {
+        this.init(stageWidth, stageHeight);
+    }
 
     draw(ctx) {
         let prevX = this.points[0].x;
