@@ -8,11 +8,10 @@ class App {
 
         document.body.append(this.canvas);
 
-        window.addEventListener("resize", this.resize.bind(this), false);
         this.resize();
-
         this.waveGroup = new WaveGroup(this.stageWidth, this.stageHeight, 5);
 
+        window.addEventListener("resize", this.resize.bind(this), false);
         window.requestAnimationFrame(this.animate.bind(this));
     }
 
@@ -24,6 +23,10 @@ class App {
         this.canvas.width = this.stageWidth * 2;
         this.canvas.height = this.stageHeight * 2;
         this.ctx.scale(2, 2);
+
+        if (this.waveGroup !== undefined) {
+            this.waveGroup.resize(this.stageWidth, this.stageHeight);
+        }
     }
 
     animate() {
